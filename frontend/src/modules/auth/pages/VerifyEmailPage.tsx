@@ -27,7 +27,7 @@ const VerifyEmailPage = () => {
       <AuthLayout>
         <AuthFormCard>
           <div className="py-12 text-center">
-            <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-700 dark:to-gray-600 flex items-center justify-center border-4 border-blue-100 dark:border-gray-600">
+            <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-linear-to-br from-blue-50 to-purple-50 dark:from-gray-700 dark:to-gray-600 flex items-center justify-center border-4 border-blue-100 dark:border-gray-600">
               <Loader2 className="w-10 h-10 text-blue-600 dark:text-blue-400 animate-spin" />
             </div>
             <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
@@ -48,7 +48,7 @@ const VerifyEmailPage = () => {
       <AuthLayout>
         <AuthFormCard>
           <div className="py-10 text-center">
-            <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 flex items-center justify-center border-4 border-red-100 dark:border-red-900/30">
+            <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-linear-to-br from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 flex items-center justify-center border-4 border-red-100 dark:border-red-900/30">
               <AlertTriangle className="w-10 h-10 text-red-600 dark:text-red-400" />
             </div>
             <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3">
@@ -60,7 +60,7 @@ const VerifyEmailPage = () => {
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link
                 to="/register"
-                className="inline-flex items-center justify-center bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300"
+                className="inline-flex items-center justify-center bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300"
               >
                 {t('auth.verifyEmail.toRegister')}
               </Link>
@@ -83,7 +83,7 @@ const VerifyEmailPage = () => {
       <AuthLayout>
         <AuthFormCard>
           <div className="py-10 text-center">
-            <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 flex items-center justify-center border-4 border-green-100 dark:border-green-900/30">
+            <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-linear-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 flex items-center justify-center border-4 border-green-100 dark:border-green-900/30">
               <CheckCircle className="w-10 h-10 text-green-600 dark:text-green-400 animate-bounce" />
             </div>
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-3">
@@ -96,7 +96,7 @@ const VerifyEmailPage = () => {
             )}
             <Link
               to="/login"
-              className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300"
+              className="inline-flex items-center justify-center gap-2 bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300"
             >
               {t('auth.verifyEmail.toLogin')}
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -114,7 +114,7 @@ const VerifyEmailPage = () => {
     <AuthLayout>
       <AuthFormCard>
         <div className="py-10 text-center">
-          <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 flex items-center justify-center border-4 border-yellow-100 dark:border-yellow-900/30">
+          <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-linear-to-br from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 flex items-center justify-center border-4 border-yellow-100 dark:border-yellow-900/30">
             <MailX className="w-10 h-10 text-yellow-600 dark:text-yellow-400" />
           </div>
           <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3">
@@ -126,7 +126,7 @@ const VerifyEmailPage = () => {
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               to="/register"
-              className="inline-flex items-center justify-center bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300"
+              className="inline-flex items-center justify-center bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300"
             >
               {t('auth.verifyEmail.toRegister')}
             </Link>

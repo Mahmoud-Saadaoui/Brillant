@@ -4,7 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 const verifyEmailApi = async (userId: string, token: string) => {
   try {
     const res = await api.get(`/auth/${userId}/verify/${token}`)
-    console.log(res.data)
     return res.data
   } catch (error) {
     console.error(error);

@@ -81,14 +81,7 @@ const LoginPage = () => {
           />
 
           {/* Remember & Forgot */}
-          <div className="flex items-center justify-between">
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input
-                type="checkbox"
-                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-              />
-              <span className="text-sm text-gray-600 dark:text-gray-400">{t('auth.login.rememberMe')}</span>
-            </label>
+          <div className="flex justify-end">
             <Link
               to="/forgot-password"
               className="text-sm font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"

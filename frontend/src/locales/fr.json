@@ -19,6 +19,7 @@
       "title": "Trouvez le Talent",
       "titleHighlight": "Idéal avec l'IA",
       "subtitle": "La plateforme de recrutement intelligente qui connecte les meilleurs talents aux opportunités parfaites grâce à l'intelligence artificielle.",
+      "getStarted": "Commencer",
       "signIn": "Se connecter"
     },
     "search": {
@@ -263,6 +264,31 @@
       "toLogin": "Se connecter",
       "toRegister": "Créer un compte",
       "backToLogin": "Retour à la connexion"
+    },
+    "forgotPassword": {
+      "title": "Mot de passe oublié",
+      "subtitle": "Entrez votre adresse email et nous vous enverrons un lien pour réinitialiser votre mot de passe",
+      "email": "Adresse email",
+      "emailPlaceholder": "Entrez votre email",
+      "submit": "Envoyer le lien de réinitialisation",
+      "backToLogin": "Vous vous souvenez de votre mot de passe ?",
+      "backToLoginLink": "Retour à la connexion",
+      "success": "Si un compte existe avec cet email, un lien de réinitialisation a été envoyé.",
+      "error": "Échec de l'envoi de l'email de réinitialisation"
+    },
+    "resetPassword": {
+      "title": "Réinitialiser le mot de passe",
+      "subtitle": "Entrez votre nouveau mot de passe ci-dessous",
+      "newPassword": "Nouveau mot de passe",
+      "newPasswordPlaceholder": "Entrez votre nouveau mot de passe",
+      "confirmPassword": "Confirmer le nouveau mot de passe",
+      "confirmPasswordPlaceholder": "Confirmez votre nouveau mot de passe",
+      "submit": "Réinitialiser le mot de passe",
+      "backToLogin": "Vous vous souvenez de votre mot de passe ?",
+      "backToLoginLink": "Retour à la connexion",
+      "success": "Le mot de passe a été réinitialisé avec succès. Vous pouvez maintenant vous connecter avec votre nouveau mot de passe.",
+      "error": "Échec de la réinitialisation du mot de passe",
+      "invalidLink": "Lien de réinitialisation invalide"
     }
   }
 }

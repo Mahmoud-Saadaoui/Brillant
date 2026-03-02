@@ -1,5 +1,6 @@
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './toast.css';
 import Header from '../shared/components/Header';
 import { Outlet } from 'react-router-dom';
 
@@ -12,11 +13,14 @@ const App = () => {
       </main>
       <ToastContainer
         position="top-right"
-        autoClose={2500}
+        autoClose={3000}
         newestOnTop
         closeOnClick
         pauseOnHover
         theme="colored"
+        toastClassName="custom-toast"
+        progressClassName="custom-toast-progress"
+        bodyClassName="custom-toast-body"
       />
     </>
   );

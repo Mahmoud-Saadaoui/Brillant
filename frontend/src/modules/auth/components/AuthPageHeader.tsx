@@ -1,8 +1,8 @@
-import { LogIn, UserPlus, MailCheck } from 'lucide-react';
+import { LogIn, UserPlus, MailCheck, KeyRound } from 'lucide-react';
 import { AuthPageHeaderProps } from '../types';
 
 const AuthPageHeader = ({ type, title, subtitle }: AuthPageHeaderProps) => {
-  const Icon = type === 'login' ? LogIn : type === 'register' ? UserPlus : MailCheck;
+  const Icon = type === 'login' ? LogIn : type === 'register' ? UserPlus : type === 'verify' ? MailCheck : KeyRound;
 
   return (
     <div className="text-center mb-8">

@@ -22,3 +22,17 @@ export interface JwtPayload {
     email: string;
   }
 }
+
+export interface ForgotPasswordData {
+  email: string;
+}
+
+export interface ResetPasswordData {
+  password: string;
+  confirmPassword: string;
+}
+
+export interface ResetPasswordParams {
+  userId: string;
+  token: string;
+}

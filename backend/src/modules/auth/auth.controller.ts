@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 import bcrypt from 'bcrypt';
-import { LoginUser, RegisterUser, UserInfo } from "./auth.types";
-import { loginSchema, registerSchema } from "./auth.validation";
+import { LoginUser, RegisterUser, UserInfo, ForgotPasswordData, ResetPasswordData } from "./auth.types";
+import { loginSchema, registerSchema, forgotPasswordSchema, resetPasswordSchema } from "./auth.validation";
 import { prisma } from "../../config/db";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
-import { getVerificationEmailTemplate } from "./templates";
+import { getVerificationEmailTemplate, getResetPasswordEmailTemplate } from "./templates";
 import { sendEmail } from "./nodemailer";
 
 const generateToken = (res: Response, userInfo: UserInfo): string => {
@@ -219,3 +219,203 @@ export const verifyAccount = async (req: Request, res: Response): Promise<void> 
     });
   }
 }
+
+/**
+ *  @method  POST
+ *  @route   /api/v1/auth/password/forgot-password
+ *  @desc    Send password reset link to user's email
+ *  @access  public
+*/
+export const forgotPassword = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { email } = req.body as ForgotPasswordData;
+
+    // Validation with zod
+    const result = forgotPasswordSchema.safeParse(req.body);
+    if (!result.success) {
+      res.status(400).json({ message: result.error.issues[0].message });
+      return;
+    }
+
+    // Check if user exists
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user) {
+      // Still return success message to prevent email enumeration
+      res.status(200).json({
+        message: "If an account exists with this email, a password reset link has been sent.",
+      });
+      return;
+    }
+
+    // Generate a new reset token or update existing one
+    const rawToken = crypto.randomBytes(32).toString("hex");
+    const clientUrl = process.env.CLIENT_URL;
+    const link = `${clientUrl}/auth/reset-password/${user.id}/${rawToken}`;
+
+    // Create or update verification token
+    await prisma.verificationToken.upsert({
+      where: { userId: user.id },
+      create: {
+        userId: user.id,
+        token: rawToken,
+      },
+      update: {
+        token: rawToken,
+      },
+    });
+
+    // Send email with reset link
+    const htmlTemplate = getResetPasswordEmailTemplate(link);
+    await sendEmail(user.email, "Reset Your Password", htmlTemplate);
+
+    // Respond with success message
+    res.status(200).json({
+      message: "If an account exists with this email, a password reset link has been sent.",
+    });
+  } catch (err) {
+    const errorMessage = err instanceof Error ? err.message : "Unknown error";
+    res.status(500).json({
+      message: "Internal Server Error",
+      error: errorMessage,
+    });
+  }
+};
+
+/**
+ *  @method  GET
+ *  @route   /api/v1/auth/password/reset-password/:userId/:token
+ *  @desc    Validate the reset password link
+ *  @access  public
+*/
+export const validateResetToken = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { userId, token } = req.params;
+
+    // Validate params
+    if (!userId || !token || Array.isArray(token)) {
+      res.status(400).json({ message: "Invalid reset link." });
+      return;
+    }
+
+    const numericUserId = Number(userId);
+    if (isNaN(numericUserId)) {
+      res.status(400).json({ message: "Invalid user ID." });
+      return;
+    }
+
+    // Check if user exists
+    const user = await prisma.user.findUnique({
+      where: { id: numericUserId },
+    });
+    if (!user) {
+      res.status(400).json({ message: "Invalid reset link." });
+      return;
+    }
+
+    // Check if token exists for this user
+    const verificationToken = await prisma.verificationToken.findFirst({
+      where: {
+        userId: user.id,
+        token,
+      },
+    });
+    if (!verificationToken) {
+      res.status(400).json({ message: "Invalid or expired reset link." });
+      return;
+    }
+
+    // Token is valid
+    res.status(200).json({
+      message: "Reset link is valid.",
+      userId: user.id,
+      email: user.email,
+    });
+  } catch (err) {
+    const errorMessage = err instanceof Error ? err.message : "Unknown error";
+    res.status(500).json({
+      message: "Internal Server Error",
+      error: errorMessage,
+    });
+  }
+};
+
+/**
+ *  @method  POST
+ *  @route   /api/v1/auth/password/reset-password/:userId/:token
+ *  @desc    Reset the user's password
+ *  @access  public
+*/
+export const resetPassword = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { userId, token } = req.params;
+    const { password } = req.body as ResetPasswordData;
+
+    // Validate request body
+    const result = resetPasswordSchema.safeParse(req.body);
+    if (!result.success) {
+      res.status(400).json({ message: result.error.issues[0].message });
+      return;
+    }
+
+    // Validate params
+    if (!userId || !token || Array.isArray(token)) {
+      res.status(400).json({ message: "Invalid reset link." });
+      return;
+    }
+
+    const numericUserId = Number(userId);
+    if (isNaN(numericUserId)) {
+      res.status(400).json({ message: "Invalid user ID." });
+      return;
+    }
+
+    // Check if user exists
+    const user = await prisma.user.findUnique({
+      where: { id: numericUserId },
+    });
+    if (!user) {
+      res.status(400).json({ message: "Invalid reset link." });
+      return;
+    }
+
+    // Check if token exists for this user
+    const verificationToken = await prisma.verificationToken.findFirst({
+      where: {
+        userId: user.id,
+        token,
+      },
+    });
+    if (!verificationToken) {
+      res.status(400).json({ message: "Invalid or expired reset link." });
+      return;
+    }
+
+    // Hash new password
+    const hashPassword = await bcrypt.hash(password, 15);
+
+    // Update user password and mark as verified
+    await prisma.user.update({
+      where: { id: numericUserId },
+      data: {
+        password: hashPassword,
+        isAccountVerified: true,
+      },
+    });
+
+    // Delete used token
+    await prisma.verificationToken.delete({
+      where: { id: verificationToken.id },
+    });
+
+    // Respond with success
+    res.status(200).json({
+      message: "Password has been successfully reset. You can now login with your new password.",
+    });
+  } catch (err) {
+    const errorMessage = err instanceof Error ? err.message : "Unknown error";
+    res.status(500).json({
+      message: "Internal Server Error",
+      error: errorMessage,
+    });
+  }
+};
