@@ -36,6 +36,22 @@ enum Gender {
   FEMALE
 }
 
+enum Availability {
+  FULL_TIME
+  PART_TIME
+  CONTRACT
+  INTERNSHIP
+  FREELANCE
+}
+
+enum LanguageLevel {
+  BASIC
+  INTERMEDIATE
+  ADVANCED
+  FLUENT
+  NATIVE
+}
+
 
 model User {
   id                Int    @id @default(autoincrement())
@@ -44,9 +60,9 @@ model User {
   password          String
   role              Role    @default(CANDIDATE)
   isAccountVerified Boolean @default(false)
-  gender           Gender?
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+  gender            Gender?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 
   verificationTokens VerificationToken[]
   // Profiles relations
@@ -69,33 +85,146 @@ model RecruiterProfile {
   userId    Int    @unique
   user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  // Entreprise
   companyName        String
   companyDescription String?
-  companySize        String?
-  website            String?
+  companySize        String?    // ex: "1-10", "11-50", "50+"
   industry           String?
   logo               String?
+  logoPublicId       String?    // Cloudinary public ID for deletion
   location           String?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  // Contact
+  phone              String?
+  website            String?
+  socialMedia        Json?      // {linkedin, twitter, facebook}
+  socialLinks        Json?      // {linkedin, twitter, facebook, github, website}
+
+  // Relations
+  jobs               Job[]
+
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 }
 
 model CandidateProfile {
-  id        Int    @id @default(autoincrement())
-  userId    Int    @unique
-  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  title       String?        // ex: Full-Stack Developer
-  bio         String?
-  location    String?
-  skills      String[]
-  softSkills  String[]
-  experiences Json           // [{title, company, startDate, endDate, description}]
-  education   Json           // [{degree, school, startDate, endDate}]
-  languages   Json           // [{language, level}]
-  cvUrl       String?        // lien PDF
-  embeddingId Int?           // pour IA matching futur
+  id                Int    @id @default(autoincrement())
+  userId            Int    @unique
+  user              User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  // Informations de base
+  avatarUrl         String?
+  avatarPublicId    String?               // Cloudinary public ID for deletion
+  title             String?              // ex: Full-Stack Developer
+  bio               String?
+  location          String?
+
+  // Disponibilité et salaire
+  availability      Availability[]
+  expectedSalaryMin Int?
+  expectedSalaryMax Int?
+
+  // Compétences
+  skills            String[]
+  softSkills        String[]
+
+  // Réseaux sociaux
+  socialLinks       Json?                // {linkedin, github, portfolio, website}
+
+  // CV
+  cvUrl             String?
+  cvPublicId        String?               // Cloudinary public ID for deletion
+
+  // IA (futur)
+  embeddingId       Int?
+
+  // Relations
+  experiences       Experience[]
+  education         Education[]
+  languages         Language[]
+  applications      Application[]
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Experience {
+  id          Int              @id @default(autoincrement())
+  candidateId Int
+  profile     CandidateProfile @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+
+  title       String            // ex: Senior Developer
+  company     String
+  location    String?
+  startDate   DateTime
+  endDate     DateTime?         // null si emploi actuel
+  description String?
+  current     Boolean          @default(false)
+
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
+
+model Education {
+  id          Int              @id @default(autoincrement())
+  candidateId Int
+  profile     CandidateProfile @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+
+  degree      String            // ex: Master en Informatique
+  school      String            // ex: Université Paris-Saclay
+  field       String?           // ex: Informatique
+  startDate   DateTime
+  endDate     DateTime?
+  description String?
+
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
+
+model Language {
+  id          Int              @id @default(autoincrement())
+  candidateId Int
+  profile     CandidateProfile @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+
+  language    String            // ex: Anglais
+  level       LanguageLevel
+
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
+
+model Job {
+  id          Int              @id @default(autoincrement())
+  recruiterId Int
+  recruiter   RecruiterProfile @relation(fields: [recruiterId], references: [id], onDelete: Cascade)
+
+  title       String
+  description String
+  location    String?
+  jobType     JobType
+  salaryMin   Int?
+  salaryMax   Int?
+
+  skills      String[]
+
+  applications Application[]
+
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
+
+model Application {
+  id          Int              @id @default(autoincrement())
+  jobId       Int
+  job         Job              @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  candidateId Int
+  candidate   CandidateProfile @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+
+  status      ApplicationStatus @default(PENDING)
+  coverLetter String?
+
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  @@unique([jobId, candidateId])
 }

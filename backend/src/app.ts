@@ -6,6 +6,7 @@ import 'dotenv/config';
 import errorHandler from './middlewares/errorHandler.js';
 import healthRoutes from './modules/health/health.routes.js';
 import authRouter from './modules/auth/auth.routes.js';
+import profilesRouter from './modules/profiles/profiles.routes.js';
 
 const app: Express = express();
 
@@ -30,6 +31,7 @@ app.use(limiter);
 // Routes
 app.use('/api/v1/health', healthRoutes);
 app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/profiles', profilesRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
