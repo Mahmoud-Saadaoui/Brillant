@@ -150,24 +150,56 @@ export const updateRecruiterProfile = async (
 
 /**
  * Update recruiter logo
+ * Returns updated profile and old logo public ID for cleanup
  */
 export const updateRecruiterLogo = async (
   userId: number,
   logoData: { logo: string; logoPublicId: string }
 ) => {
-  return await prisma.recruiterProfile.update({
+  // Get old profile to retrieve previous logo public ID
+  const oldProfile = await prisma.recruiterProfile.findUnique({
+    where: { userId },
+    select: { logoPublicId: true },
+  });
+
+  // Update with new logo data
+  const updatedProfile = await prisma.recruiterProfile.update({
     where: { userId },
     data: logoData,
     select: {
       logo: true,
     },
   });
+
+  return {
+    updatedProfile,
+    oldLogoPublicId: oldProfile?.logoPublicId,
+  };
 };
 
 /**
- * Delete recruiter profile
+ * Delete recruiter profile and associated logo from Cloudinary
  */
 export const deleteRecruiterProfile = async (userId: number): Promise<void> => {
+  // Get profile first to retrieve Cloudinary public ID
+  const profile = await prisma.recruiterProfile.findUnique({
+    where: { userId },
+    select: {
+      logoPublicId: true,
+    },
+  });
+
+  // Delete logo from Cloudinary
+  if (profile?.logoPublicId) {
+    try {
+      const { deleteFromCloudinary } = await import('./file-upload.service.js');
+      await deleteFromCloudinary(profile.logoPublicId, 'image');
+    } catch (error) {
+      console.warn('Failed to delete logo from Cloudinary:', error);
+    }
+  }
+
+  // Delete profile from database
   await prisma.recruiterProfile.delete({
     where: { userId },
   });

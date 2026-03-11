@@ -137,14 +137,20 @@ export const updateRecruiterLogo = async (req: Request, res: Response): Promise<
       return;
     }
 
-    // Upload to Cloudinary and update profile
-    const logoData = await fileUploadService.uploadRecruiterLogo(userId, req.file);
+    // Get old logo public ID for deletion
+    const existingProfile = await recruiterService.getRecruiterProfileByUserId(userId);
+    const oldLogoPublicId = existingProfile?.logoPublicId;
+
+    // Upload new logo with old one deletion
+    const logoData = await fileUploadService.updateRecruiterLogo(oldLogoPublicId, req.file);
+
+    // Update profile with new logo data
     const profile = await recruiterService.updateRecruiterLogo(userId, {
       logo: logoData.url,
       logoPublicId: logoData.publicId,
     });
 
-    res.status(200).json({ logo: profile.logo });
+    res.status(200).json({ logo: profile.updatedProfile.logo });
   } catch (error: any) {
     console.error("Error updating recruiter logo:", error);
     if (error.message === "Profile not found") {

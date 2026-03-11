@@ -33,14 +33,15 @@ export interface UploadResult {
  */
 export const uploadToCloudinary = async (
   filename: string,
-  resourceType: 'image' | 'raw' = 'image'
+  resourceType: 'image' | 'raw' = 'image',
+  folder?: string
 ): Promise<UploadResult> => {
   try {
     // Step 1: Get the local file path
     const localFilePath = getLocalFilePath(filename);
 
     // Step 2: Upload to Cloudinary
-    const cloudinaryData = await cloudinaryUploadFile(localFilePath, resourceType);
+    const cloudinaryData = await cloudinaryUploadFile(localFilePath, resourceType, folder);
 
     // Step 3: Remove local file after successful upload
     removeLocalFile(localFilePath);
@@ -76,10 +77,11 @@ export const uploadToCloudinary = async (
  */
 export const uploadMultipleToCloudinary = async (
   filenames: string[],
-  resourceType: 'image' | 'raw' = 'image'
+  resourceType: 'image' | 'raw' = 'image',
+  folder?: string
 ): Promise<UploadResult[]> => {
   const uploadPromises = filenames.map((filename) =>
-    uploadToCloudinary(filename, resourceType)
+    uploadToCloudinary(filename, resourceType, folder)
   );
 
   return Promise.all(uploadPromises);
@@ -182,7 +184,7 @@ export const uploadCandidateAvatar = async (
   userId: number,
   file: Express.Multer.File
 ): Promise<{ url: string; publicId: string }> => {
-  const result = await uploadToCloudinary(file.filename, 'image');
+  const result = await uploadToCloudinary(file.filename, 'image', 'talent-ai/avatars');
 
   if (!result.success || !result.data) {
     throw new Error(result.error || 'Failed to upload avatar');
@@ -205,7 +207,7 @@ export const uploadCandidateCv = async (
   userId: number,
   file: Express.Multer.File
 ): Promise<{ url: string; publicId: string }> => {
-  const result = await uploadToCloudinary(file.filename, 'raw');
+  const result = await uploadToCloudinary(file.filename, 'raw', 'talent-ai/cvs');
 
   if (!result.success || !result.data) {
     throw new Error(result.error || 'Failed to upload CV');
@@ -228,7 +230,111 @@ export const uploadRecruiterLogo = async (
   userId: number,
   file: Express.Multer.File
 ): Promise<{ url: string; publicId: string }> => {
-  const result = await uploadToCloudinary(file.filename, 'image');
+  const result = await uploadToCloudinary(file.filename, 'image', 'talent-ai/logos');
+
+  if (!result.success || !result.data) {
+    throw new Error(result.error || 'Failed to upload logo');
+  }
+
+  return {
+    url: result.data.url,
+    publicId: result.data.publicId,
+  };
+};
+
+// ==================== UPDATE FUNCTIONS WITH OLD FILE DELETION ====================
+
+/**
+ * Update candidate avatar - deletes old avatar before uploading new one
+ *
+ * @param oldPublicId - Previous avatar public ID to delete (can be null/undefined)
+ * @param file - Multer file object
+ * @returns Promise with upload result containing url and publicId
+ */
+export const updateCandidateAvatar = async (
+  oldPublicId: string | null | undefined,
+  file: Express.Multer.File
+): Promise<{ url: string; publicId: string }> => {
+  // Delete old avatar if exists
+  if (oldPublicId) {
+    try {
+      await deleteFromCloudinary(oldPublicId, 'image');
+    } catch (error) {
+      console.warn('Failed to delete old avatar:', error);
+      // Continue with upload even if deletion fails
+    }
+  }
+
+  // Upload new avatar
+  const result = await uploadToCloudinary(file.filename, 'image', 'talent-ai/avatars');
+
+  if (!result.success || !result.data) {
+    throw new Error(result.error || 'Failed to upload avatar');
+  }
+
+  return {
+    url: result.data.url,
+    publicId: result.data.publicId,
+  };
+};
+
+/**
+ * Update candidate CV - deletes old CV before uploading new one
+ *
+ * @param oldPublicId - Previous CV public ID to delete (can be null/undefined)
+ * @param file - Multer file object
+ * @returns Promise with upload result containing url and publicId
+ */
+export const updateCandidateCv = async (
+  oldPublicId: string | null | undefined,
+  file: Express.Multer.File
+): Promise<{ url: string; publicId: string }> => {
+  // Delete old CV if exists
+  if (oldPublicId) {
+    try {
+      await deleteFromCloudinary(oldPublicId, 'raw');
+    } catch (error) {
+      console.warn('Failed to delete old CV:', error);
+      // Continue with upload even if deletion fails
+    }
+  }
+
+  // Upload new CV
+  const result = await uploadToCloudinary(file.filename, 'raw', 'talent-ai/cvs');
+
+  if (!result.success || !result.data) {
+    throw new Error(result.error || 'Failed to upload CV');
+  }
+
+  return {
+    url: result.data.url,
+    publicId: result.data.publicId,
+  };
+};
+
+/**
+ * Update recruiter logo - deletes old logo before uploading new one
+ *
+ * @param oldPublicId - Previous logo public ID to delete (can be null/undefined)
+ * @param file - Multer file object
+ * @returns Promise with upload result containing url and publicId
+ */
+export const updateRecruiterLogo = async (
+  oldPublicId: string | null | undefined,
+  file: Express.Multer.File
+): Promise<{ url: string; publicId: string }> => {
+  // Delete old logo if exists
+  if (oldPublicId) {
+    try {
+      await deleteFromCloudinary(oldPublicId, 'image');
+    } catch (error) {
+      console.warn('Failed to delete old logo:', error);
+      // Continue with upload even if deletion fails
+    }
+  }
+
+  // Upload new logo
+  const result = await uploadToCloudinary(file.filename, 'image', 'talent-ai/logos');
 
   if (!result.success || !result.data) {
     throw new Error(result.error || 'Failed to upload logo');

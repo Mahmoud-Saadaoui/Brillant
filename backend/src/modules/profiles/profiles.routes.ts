@@ -47,19 +47,16 @@ profilesRouter.delete('/candidate', authenticate, isCandidate, deleteCandidatePr
 profilesRouter.get('/candidate/:id', getCandidateProfileById);
 
 // ==================== EXPERIENCE ROUTES (CANDIDATE ONLY) ====================
-
 profilesRouter.post('/candidate/experience', authenticate, isCandidate, addExperience);
 profilesRouter.put('/candidate/experience/:id', authenticate, isCandidate, updateExperience);
 profilesRouter.delete('/candidate/experience/:id', authenticate, isCandidate, deleteExperience);
 
 // ==================== EDUCATION ROUTES (CANDIDATE ONLY) ====================
-
 profilesRouter.post('/candidate/education', authenticate, isCandidate, addEducation);
 profilesRouter.put('/candidate/education/:id', authenticate, isCandidate, updateEducation);
 profilesRouter.delete('/candidate/education/:id', authenticate, isCandidate, deleteEducation);
 
 // ==================== LANGUAGE ROUTES (CANDIDATE ONLY) ====================
-
 profilesRouter.post('/candidate/language', authenticate, isCandidate, addLanguage);
 profilesRouter.put('/candidate/language/:id', authenticate, isCandidate, updateLanguage);
 profilesRouter.delete('/candidate/language/:id', authenticate, isCandidate, deleteLanguage);

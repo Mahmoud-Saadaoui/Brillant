@@ -137,14 +137,20 @@ export const updateCandidateAvatar = async (req: Request, res: Response): Promis
       return;
     }
 
-    // Upload to Cloudinary and update profile
-    const avatarData = await fileUploadService.uploadCandidateAvatar(userId, req.file);
+    // Get old avatar public ID for deletion
+    const existingProfile = await candidateService.getCandidateProfileByUserId(userId);
+    const oldAvatarPublicId = existingProfile?.avatarPublicId;
+
+    // Upload new avatar with old one deletion
+    const avatarData = await fileUploadService.updateCandidateAvatar(oldAvatarPublicId, req.file);
+
+    // Update profile with new avatar data
     const profile = await candidateService.updateCandidateAvatar(userId, {
       avatarUrl: avatarData.url,
       avatarPublicId: avatarData.publicId,
     });
 
-    res.status(200).json({ avatarUrl: profile.avatarUrl });
+    res.status(200).json({ avatarUrl: profile.updatedProfile.avatarUrl });
   } catch (error: any) {
     console.error("Error updating candidate avatar:", error);
     if (error.message === "Profile not found") {
@@ -171,15 +177,21 @@ export const uploadCandidateCv = async (req: Request, res: Response): Promise<vo
       return;
     }
 
-    // Upload to Cloudinary and update profile
-    const cvData = await fileUploadService.uploadCandidateCv(userId, req.file);
+    // Get old CV public ID for deletion
+    const existingProfile = await candidateService.getCandidateProfileByUserId(userId);
+    const oldCvPublicId = existingProfile?.cvPublicId;
+
+    // Upload new CV with old one deletion
+    const cvData = await fileUploadService.updateCandidateCv(oldCvPublicId, req.file);
+
+    // Update profile with new CV data
     const profile = await candidateService.updateCandidateCv(userId, {
       cvUrl: cvData.url,
       cvPublicId: cvData.publicId,
     });
 
     res.status(200).json({
-      cvUrl: profile.cvUrl,
+      cvUrl: profile.updatedProfile.cvUrl,
       message: "CV uploaded successfully",
     });
   } catch (error: any) {

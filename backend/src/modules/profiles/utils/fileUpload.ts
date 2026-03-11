@@ -7,7 +7,7 @@ const __dirname = path.dirname(__filename);
 
 // Get the absolute path to the assets directory
 const getAssetsDir = () => {
-  return path.join(__dirname, '../../../assets');
+  return path.join(__dirname, '../../../../assets');
 };
 
 // Remove file from local storage

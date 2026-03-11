@@ -42,6 +42,7 @@ export interface CandidateProfileResponse {
   id: number;
   userId: number;
   avatarUrl: string | null;
+  avatarPublicId: string | null;
   title: string | null;
   bio: string | null;
   location: string | null;
@@ -52,6 +53,7 @@ export interface CandidateProfileResponse {
   softSkills: string[];
   socialLinks: object | null;
   cvUrl: string | null;
+  cvPublicId: string | null;
   embeddingId: number | null;
   createdAt: Date;
   updatedAt: Date;
@@ -112,6 +114,7 @@ export interface RecruiterProfileResponse {
   companySize: string | null;
   industry: string | null;
   logo: string | null;
+  logoPublicId: string | null;
   location: string | null;
   phone: string | null;
   website: string | null;

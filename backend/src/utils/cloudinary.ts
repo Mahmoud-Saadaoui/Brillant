@@ -11,7 +11,8 @@ cloudinary.config({
 // Cloudinary Upload Image/File
 export const cloudinaryUploadFile = async (
   fileToUpload: string,
-  resourceType: 'image' | 'raw' | 'auto' = 'auto'
+  resourceType: 'image' | 'raw' | 'auto' = 'auto',
+  folder?: string
 ): Promise<{
   secure_url: string;
   public_id: string;
@@ -22,9 +23,11 @@ export const cloudinaryUploadFile = async (
   try {
     const data = await cloudinary.uploader.upload(fileToUpload, {
       resource_type: resourceType,
+      folder: folder || 'talent-ai',
+      access_mode: 'public',
     });
     return data;
-  } catch (error) {
+  } catch (error: any) {
     console.error('Cloudinary upload error:', error);
     throw new Error('Internal Server Error (cloudinary)');
   }

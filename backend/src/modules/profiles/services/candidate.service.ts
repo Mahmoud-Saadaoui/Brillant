@@ -170,40 +170,95 @@ export const updateCandidateProfile = async (
 
 /**
  * Update candidate avatar
+ * Returns updated profile and old avatar public ID for cleanup
  */
 export const updateCandidateAvatar = async (
   userId: number,
   avatarData: { avatarUrl: string; avatarPublicId: string }
 ) => {
-  return await prisma.candidateProfile.update({
+  // Get old profile to retrieve previous avatar public ID
+  const oldProfile = await prisma.candidateProfile.findUnique({
+    where: { userId },
+    select: { avatarPublicId: true },
+  });
+
+  // Update with new avatar data
+  const updatedProfile = await prisma.candidateProfile.update({
     where: { userId },
     data: avatarData,
     select: {
       avatarUrl: true,
     },
   });
+
+  return {
+    updatedProfile,
+    oldAvatarPublicId: oldProfile?.avatarPublicId,
+  };
 };
 
 /**
  * Update candidate CV
+ * Returns updated profile and old CV public ID for cleanup
  */
 export const updateCandidateCv = async (
   userId: number,
   cvData: { cvUrl: string; cvPublicId: string }
 ) => {
-  return await prisma.candidateProfile.update({
+  // Get old profile to retrieve previous CV public ID
+  const oldProfile = await prisma.candidateProfile.findUnique({
+    where: { userId },
+    select: { cvPublicId: true },
+  });
+
+  // Update with new CV data
+  const updatedProfile = await prisma.candidateProfile.update({
     where: { userId },
     data: cvData,
     select: {
       cvUrl: true,
     },
   });
+
+  return {
+    updatedProfile,
+    oldCvPublicId: oldProfile?.cvPublicId,
+  };
 };
 
 /**
- * Delete candidate profile
+ * Delete candidate profile and associated files from Cloudinary
  */
 export const deleteCandidateProfile = async (userId: number): Promise<void> => {
+  // Get profile first to retrieve Cloudinary public IDs
+  const profile = await prisma.candidateProfile.findUnique({
+    where: { userId },
+    select: {
+      avatarPublicId: true,
+      cvPublicId: true,
+    },
+  });
+
+  // Delete files from Cloudinary
+  if (profile?.avatarPublicId) {
+    try {
+      const { deleteFromCloudinary } = await import('./file-upload.service.js');
+      await deleteFromCloudinary(profile.avatarPublicId, 'image');
+    } catch (error) {
+      console.warn('Failed to delete avatar from Cloudinary:', error);
+    }
+  }
+
+  if (profile?.cvPublicId) {
+    try {
+      const { deleteFromCloudinary } = await import('./file-upload.service.js');
+      await deleteFromCloudinary(profile.cvPublicId, 'raw');
+    } catch (error) {
+      console.warn('Failed to delete CV from Cloudinary:', error);
+    }
+  }
+
+  // Delete profile from database
   await prisma.candidateProfile.delete({
     where: { userId },
   });
