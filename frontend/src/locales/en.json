@@ -1,7 +1,7 @@
 {
   "common": {
-    "welcome": "Welcome to TalentIA",
-    "appName": "TalentIA",
+    "welcome": "Welcome to Brillant",
+    "appName": "Brillant",
     "loading": "Loading...",
     "error": "Error"
   },
@@ -101,7 +101,7 @@
       "title": "What Our Users Say",
       "subtitle": "Thousands of candidates and recruiters trust us.",
       "item1": {
-        "quote": "Thanks to TalentAI, I found the perfect job in just 2 weeks. The recommendations were very relevant!",
+        "quote": "Thanks to Brillant, I found the perfect job in just 2 weeks. The recommendations were very relevant!",
         "author": "Sophie Martin",
         "role": "Full-stack Developer"
       },
@@ -122,7 +122,7 @@
     },
     "cta": {
       "title": "Ready to Transform Your Recruitment?",
-      "subtitle": "Join thousands of candidates and recruiters already using TalentAI.",
+      "subtitle": "Join thousands of candidates and recruiters already using Brillant.",
       "primaryButton": "Get Started Free",
       "secondaryButton": "View Demo"
     },
@@ -164,7 +164,7 @@
   "auth": {
     "login": {
       "title": "Sign In",
-      "subtitle": "Sign in to your TalentIA account",
+      "subtitle": "Sign in to your Brillant account",
       "email": "Email",
       "emailPlaceholder": "your@email.com",
       "password": "Password",
@@ -177,7 +177,7 @@
     },
     "register": {
       "title": "Create an Account",
-      "subtitle": "Join TalentIA today",
+      "subtitle": "Join Brillant today",
       "name": "Full Name",
       "namePlaceholder": "Enter your full name",
       "email": "Email",

@@ -1,6 +1,6 @@
 {
-  "name": "talent-ia-frontend",
-  "description": "the client-side of my talent-ia project, built with React and Vite",
+  "name": "brillant-frontend",
+  "description": "the client-side of Brillant project, built with React and Vite",
   "private": true,
   "version": "1.0.0",
   "type": "module",

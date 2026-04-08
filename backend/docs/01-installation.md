@@ -1,6 +1,6 @@
 # 📦 Installation & Configuration
 
-Guide d'installation complet pour le backend Talent AI.
+Guide d'installation complet pour le backend Brillant.
 
 ## Prérequis
 
@@ -77,7 +77,7 @@ CLIENT_URL=http://localhost:5173
 # ========================================
 DB_USER=postgres
 DB_HOST=localhost
-DB_NAME=talent_ai_db
+DB_NAME=brillant_db
 DB_PASSWORD=votre_mot_de_passe
 DB_PORT=5432
 ```
@@ -91,7 +91,7 @@ DB_PORT=5432
 | `CLIENT_URL`  | URL du frontend autorisé par CORS | `http://localhost:5173`             |
 | `DB_USER`     | Utilisateur PostgreSQL            | `postgres`                          |
 | `DB_HOST`     | Hôte de la base                   | `localhost`                         |
-| `DB_NAME`     | Nom de la base de données         | `talent_ai_db`                      |
+| `DB_NAME`     | Nom de la base de données         | `brillant_db`                      |
 | `DB_PASSWORD` | Mot de passe PostgreSQL           | `*****`                             |
 | `DB_PORT`     | Port PostgreSQL                   | `5432`                              |
 

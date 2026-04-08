@@ -6,7 +6,7 @@ const AdminProfile = () => {
 
   const profile = {
     name: 'Admin User',
-    email: 'admin@talentai.com',
+    email: 'admin@brillant.com',
     phone: '+1 234 567 8900',
     location: 'San Francisco, CA',
     joinDate: 'January 15, 2023',

@@ -1,4 +1,4 @@
-// Données mockées pour les statistiques du dashboard TalentAI
+// Données mockées pour les statistiques du dashboard Brillant
 
 // KPIs principaux - Page Dashboard
 export const MOCK_DASHBOARD_KPI = {

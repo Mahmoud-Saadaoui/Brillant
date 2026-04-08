@@ -1,7 +1,7 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "the server-side of my Talent AI app",
+  "description": "the server-side of Brillant app",
   "main": "dist/server.js",
   "type": "module",
   "scripts": {
@@ -11,8 +11,8 @@
     "prisma:auto": "node scripts/prisma-auto.js"
   },
   "keywords": [
-    "Talent AI",
-    "Talent AI Backend"
+    "Brillant",
+    "Brillant Backend"
   ],
   "author": "Saadaoui Mahmoud",
   "license": "ISC",

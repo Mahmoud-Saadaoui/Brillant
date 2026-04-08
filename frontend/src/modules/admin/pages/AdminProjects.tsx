@@ -19,7 +19,7 @@ const AdminProjects = () => {
   const projects = [
     {
       id: 1,
-      name: 'TalentAI Platform Redesign',
+      name: 'Brillant Platform Redesign',
       client: 'Internal',
       finishDate: '2024-05-15',
       price: '$15,000',

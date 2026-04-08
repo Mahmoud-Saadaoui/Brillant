@@ -68,7 +68,7 @@ const AdminLayout = () => {
               <span className="text-lg font-bold text-slate-900 dark:text-slate-100 block">
                 Admin Panel
               </span>
-              <span className="text-xs text-slate-500 dark:text-slate-400">TalentAI</span>
+              <span className="text-xs text-slate-500 dark:text-slate-400">Brillant</span>
             </div>
           </Link>
           <button
@@ -92,7 +92,7 @@ const AdminLayout = () => {
                 {auth?.name || 'Admin User'}
               </p>
               <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
-                {'admin@talentai.com'}
+                {'admin@brillant.com'}
               </p>
             </div>
           </div>

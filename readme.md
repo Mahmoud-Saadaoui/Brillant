@@ -74,7 +74,7 @@ npm install
 
 3. Create a `.env` file in the backend folder:
 ```env
-DATABASE_URL="postgresql://user:password@localhost:5432/talent_ai"
+DATABASE_URL="postgresql://user:password@localhost:5432/brillant"
 JWT_SECRET="your_jwt_secret_here"
 CLIENT_URL="http://localhost:5173"
 PORT=4000

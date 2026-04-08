@@ -184,7 +184,7 @@ export const uploadCandidateAvatar = async (
   userId: number,
   file: Express.Multer.File
 ): Promise<{ url: string; publicId: string }> => {
-  const result = await uploadToCloudinary(file.filename, 'image', 'talent-ai/avatars');
+  const result = await uploadToCloudinary(file.filename, 'image', 'brillant/avatars');
 
   if (!result.success || !result.data) {
     throw new Error(result.error || 'Failed to upload avatar');
@@ -207,7 +207,7 @@ export const uploadCandidateCv = async (
   userId: number,
   file: Express.Multer.File
 ): Promise<{ url: string; publicId: string }> => {
-  const result = await uploadToCloudinary(file.filename, 'raw', 'talent-ai/cvs');
+  const result = await uploadToCloudinary(file.filename, 'raw', 'brillant/cvs');
 
   if (!result.success || !result.data) {
     throw new Error(result.error || 'Failed to upload CV');
@@ -230,7 +230,7 @@ export const uploadRecruiterLogo = async (
   userId: number,
   file: Express.Multer.File
 ): Promise<{ url: string; publicId: string }> => {
-  const result = await uploadToCloudinary(file.filename, 'image', 'talent-ai/logos');
+  const result = await uploadToCloudinary(file.filename, 'image', 'brillant/logos');
 
   if (!result.success || !result.data) {
     throw new Error(result.error || 'Failed to upload logo');
@@ -266,7 +266,7 @@ export const updateCandidateAvatar = async (
   }
 
   // Upload new avatar
-  const result = await uploadToCloudinary(file.filename, 'image', 'talent-ai/avatars');
+  const result = await uploadToCloudinary(file.filename, 'image', 'brillant/avatars');
 
   if (!result.success || !result.data) {
     throw new Error(result.error || 'Failed to upload avatar');
@@ -300,7 +300,7 @@ export const updateCandidateCv = async (
   }
 
   // Upload new CV
-  const result = await uploadToCloudinary(file.filename, 'raw', 'talent-ai/cvs');
+  const result = await uploadToCloudinary(file.filename, 'raw', 'brillant/cvs');
 
   if (!result.success || !result.data) {
     throw new Error(result.error || 'Failed to upload CV');
@@ -334,7 +334,7 @@ export const updateRecruiterLogo = async (
   }
 
   // Upload new logo
-  const result = await uploadToCloudinary(file.filename, 'image', 'talent-ai/logos');
+  const result = await uploadToCloudinary(file.filename, 'image', 'brillant/logos');
 
   if (!result.success || !result.data) {
     throw new Error(result.error || 'Failed to upload logo');

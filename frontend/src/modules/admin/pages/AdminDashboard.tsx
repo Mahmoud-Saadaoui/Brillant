@@ -105,7 +105,7 @@ const AdminDashboard = () => {
             Dashboard
           </h1>
           <p className="text-slate-600 dark:text-slate-400 mt-1">
-            Vue d'ensemble de la plateforme TalentAI
+            Vue d'ensemble de la plateforme Brillant
           </p>
         </div>
       </div>

@@ -1,6 +1,6 @@
-# 📚 Documentation Talent AI Backend
+# 📚 Documentation Brillant Backend
 
-Bienvenue dans la documentation du backend Talent AI. Ce projet est une API REST modulaire construite avec Express, TypeScript et PostgreSQL.
+Bienvenue dans la documentation du backend Brillant. Ce projet est une API REST modulaire construite avec Express, TypeScript et PostgreSQL.
 
 ## 🚀 Démarrage rapide
 

@@ -1,7 +1,7 @@
 export const getVerificationEmailTemplate = (link: string): string => {
   return `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; background-color: #f4f4f4; border-radius: 10px;">
-      <h2 style="text-align: center; color: #573d7d;">Welcome to Talent AI</h2>
+      <h2 style="text-align: center; color: #573d7d;">Welcome to Brillant</h2>
       <p style="font-size: 16px; color: #333;">
         Thank you for registering. Please click the button below to verify your email address:
       </p>

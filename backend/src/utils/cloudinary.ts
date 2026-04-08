@@ -23,7 +23,7 @@ export const cloudinaryUploadFile = async (
   try {
     const data = await cloudinary.uploader.upload(fileToUpload, {
       resource_type: resourceType,
-      folder: folder || 'talent-ai',
+      folder: folder || 'brillant',
       access_mode: 'public',
     });
     return data;
