@@ -1,10 +1,10 @@
-# Talent AI
+# Brillant
 
 An intelligent recruitment platform connecting candidates and recruiters with the help of AI.
 
 ## Overview
 
-Talent AI is a fullstack application that allows candidates to create detailed profiles and recruiters to post job offers. The platform uses AI to match candidates' skills with companies' needs.
+Brillant is a fullstack application that allows candidates to create detailed profiles and recruiters to post job offers. The platform uses AI to match candidates' skills with companies' needs.
 
 ## Technologies
 
@@ -33,7 +33,7 @@ Talent AI is a fullstack application that allows candidates to create detailed p
 ## Project Structure
 
 ```
-talent-ai/
+Brillant/
 ├── frontend/
 │   ├── src/
 │   │   ├── app/          # Main configuration
