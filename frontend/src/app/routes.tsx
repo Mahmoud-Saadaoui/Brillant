@@ -10,20 +10,28 @@ import NotFound from "../shared/components/NotFound.js";
 import VerifyEmail from "../modules/auth/pages/VerifyEmailPage.js";
 import ForgotPasswordPage from "../modules/auth/pages/ForgotPasswordPage.js";
 import ResetPasswordPage from "../modules/auth/pages/ResetPasswordPage.js";
+import {
+  AdminDashboard,
+  AdminSettings,
+  AdminJobs,
+  AdminUsers,
+  AdminAnalytics,
+} from "../modules/admin/pages/index.js";
+import AdminLayout from "../modules/admin/components/AdminLayout";
 // import { useAppContext } from "../shared/context/index.js";
 
 function Router() {
   // const { auth, isTokenExpired } = useAppContext();
-  
+
   const router = createBrowserRouter([
     {
       path: "/",
       element: <App />,
       children: [
         { index: true, element: <HomePage /> },
-        { 
+        {
           path: "/login",
-          element: <LoginPage /> ,
+          element: <LoginPage />,
         },
         {
           path: "/register",
@@ -40,6 +48,17 @@ function Router() {
         {
           path: "/auth/reset-password/:userId/:token",
           element: <ResetPasswordPage />,
+        },
+        {
+          path: "/admin",
+          element: <AdminLayout />,
+          children: [
+            { index: true, element: <AdminDashboard /> },
+            { path: "jobs", element: <AdminJobs /> },
+            { path: "users", element: <AdminUsers /> },
+            { path: "analytics", element: <AdminAnalytics /> },
+            { path: "settings", element: <AdminSettings /> },
+          ],
         },
         { path: "/*", element: <NotFound /> },
       ],

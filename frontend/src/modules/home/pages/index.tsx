@@ -7,8 +7,25 @@ import TestimonialsSection from '../components/TestimonialsSection';
 import CompaniesSection from '../components/CompaniesSection';
 import CtaSection from '../components/CtaSection';
 import Footer from '../components/Footer';
+import { useAppContext } from '../../../shared/context';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const HomePage = () => {
+  const { auth } = useAppContext();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (auth) {
+      navigate('/candidate/dashboard');
+    }
+  }, [auth, navigate]);
+
+  // Don't render home page if user is logged in
+  if (auth) {
+    return null;
+  }
+
   return (
     <div className="w-full">
       <HeroSection />

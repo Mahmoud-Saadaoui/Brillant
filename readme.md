@@ -1,168 +1,168 @@
 # Talent AI
 
-Une plateforme de recrutement intelligente connectant candidats et recruteurs avec l'aide de l'IA.
+An intelligent recruitment platform connecting candidates and recruiters with the help of AI.
 
 ## Overview
 
-Talent AI est une application fullstack qui permet aux candidats de créer des profils détaillés et aux recruteurs de publier des offres. La plateforme utilise l'IA pour matcher les compétences des candidats avec les besoins des entreprises.
+Talent AI is a fullstack application that allows candidates to create detailed profiles and recruiters to post job offers. The platform uses AI to match candidates' skills with companies' needs.
 
 ## Technologies
 
 ### Frontend
-- **React 19** - Framework UI
+- **React 19** - UI Framework
 - **Vite** - Build tool
-- **TypeScript** - Typage statique
+- **TypeScript** - Static typing
 - **TailwindCSS** - Styling
 - **React Router** - Navigation
-- **React Hook Form** - Gestion des formulaires
-- **i18next** - Internationalisation (FR/EN)
-- **Axios** - Client HTTP
-- **Tanstack Query** - Gestion d'état serveur
+- **React Hook Form** - Form management
+- **i18next** - Internationalization (FR/EN)
+- **Axios** - HTTP client
+- **Tanstack Query** - Server state management
 
 ### Backend
-- **Node.js + Express** - Serveur API
-- **TypeScript** - Typage statique
-- **Prisma** - ORM pour base de données
-- **PostgreSQL** - Base de données
-- **JWT** - Authentification
-- **bcrypt** - Hachage des mots de passe
-- **Zod** - Validation des données
-- **Helmet** - Sécurité HTTP
-- **Rate Limiting** - Protection contre les abus
+- **Node.js + Express** - API Server
+- **TypeScript** - Static typing
+- **Prisma** - Database ORM
+- **PostgreSQL** - Database
+- **JWT** - Authentication
+- **bcrypt** - Password hashing
+- **Zod** - Data validation
+- **Helmet** - HTTP security
+- **Rate Limiting** - Abuse protection
 
-## Structure du Projet
+## Project Structure
 
 ```
 talent-ai/
 ├── frontend/
 │   ├── src/
-│   │   ├── app/          # Configuration principale
-│   │   ├── modules/      # Fonctionnalités (auth, home, profiles)
-│   │   ├── shared/       # Composants et utilitaires partagés
-│   │   └── i18n/         # Configuration des langues
+│   │   ├── app/          # Main configuration
+│   │   ├── modules/      # Features (auth, home, profiles)
+│   │   ├── shared/       # Shared components and utilities
+│   │   └── i18n/         # Language configuration
 │   └── package.json
 │
 └── backend/
     ├── src/
     │   ├── modules/      # Routes, controllers, services
-    │   ├── middlewares/  # Middlewares Express
-    │   ├── config/       # Configuration Prisma, etc.
-    │   └── types/        # Types TypeScript
+    │   ├── middlewares/  # Express middlewares
+    │   ├── config/       # Prisma configuration, etc.
+    │   └── types/        # TypeScript types
     ├── prisma/
-    │   └── schema.prisma # Schéma de base de données
+    │   └── schema.prisma # Database schema
     └── package.json
 ```
 
 ## Installation
 
-### Prérequis
+### Prerequisites
 - Node.js (v18+)
 - PostgreSQL
-- npm ou yarn
+- npm or yarn
 
 ### Backend
 
-1. Cloner le projet et aller dans le dossier backend :
+1. Clone the project and navigate to the backend folder:
 ```bash
 cd backend
 ```
 
-2. Installer les dépendances :
+2. Install dependencies:
 ```bash
 npm install
 ```
 
-3. Créer un fichier `.env` dans le dossier backend :
+3. Create a `.env` file in the backend folder:
 ```env
 DATABASE_URL="postgresql://user:password@localhost:5432/talent_ai"
-JWT_SECRET="votre_secret_jwt_ici"
+JWT_SECRET="your_jwt_secret_here"
 CLIENT_URL="http://localhost:5173"
 PORT=4000
 ```
 
-4. Lancer les migrations Prisma :
+4. Run Prisma migrations:
 ```bash
 npx prisma migrate dev
 ```
 
-5. Démarrer le serveur en développement :
+5. Start the development server:
 ```bash
 npm run server
 ```
 
-Le serveur démarre sur `http://localhost:4000`
+The server starts on `http://localhost:4000`
 
 ### Frontend
 
-1. Aller dans le dossier frontend :
+1. Navigate to the frontend folder:
 ```bash
 cd frontend
 ```
 
-2. Installer les dépendances :
+2. Install dependencies:
 ```bash
 npm install
 ```
 
-3. Démarrer le client en développement :
+3. Start the development client:
 ```bash
 npm run client
 ```
 
-Le frontend démarre sur `http://localhost:5173`
+The frontend starts on `http://localhost:5173`
 
-## Scripts Disponibles
+## Available Scripts
 
 ### Backend
 | Script | Description |
 |--------|-------------|
-| `npm run server` | Démarrer en mode développement avec hot-reload |
-| `npm run build` | Compiler TypeScript |
-| `npm start` | Démarrer le serveur de production |
+| `npm run server` | Start in development mode with hot-reload |
+| `npm run build` | Compile TypeScript |
+| `npm start` | Start production server |
 
 ### Frontend
 | Script | Description |
 |--------|-------------|
-| `npm run client` | Démarrer le serveur de développement |
-| `npm run build` | Compiler pour la production |
-| `npm run preview` | Prévisualiser le build de production |
-| `npm run lint` | Exécuter ESLint |
+| `npm run client` | Start development server |
+| `npm run build` | Build for production |
+| `npm run preview` | Preview production build |
+| `npm run lint` | Run ESLint |
 
-## Fonctionnalités
+## Features
 
-### Authentification
-- Inscription (Candidat / Recruteur)
-- Connexion avec JWT
-- Vérification de compte par email
-- Rôles : CANDIDATE, RECRUITER, ADMIN
+### Authentication
+- Registration (Candidate / Recruiter)
+- Login with JWT
+- Email verification
+- Roles: CANDIDATE, RECRUITER, ADMIN
 
-### Profils Candidats
-- Informations personnelles
-- Compétences techniques et soft skills
-- Expériences professionnelles
-- Formation
-- Langues
+### Candidate Profiles
+- Personal information
+- Technical skills and soft skills
+- Professional experience
+- Education
+- Languages
 - CV (PDF)
 
-### Profils Recruteurs
-- Informations entreprise
-- Description et secteur d'activité
-- Taille de l'entreprise
-- Site web
+### Recruiter Profiles
+- Company information
+- Description and industry
+- Company size
+- Website
 
 ## API Routes
 
-| Méthode | Route | Description |
+| Method | Route | Description |
 |---------|-------|-------------|
-| GET | `/api/v1/health` | Vérifier l'état du serveur |
-| POST | `/api/v1/auth/register` | Inscription |
-| POST | `/api/v1/auth/login` | Connexion |
-| POST | `/api/v1/auth/logout` | Déconnexion |
+| GET | `/api/v1/health` | Check server status |
+| POST | `/api/v1/auth/register` | Register |
+| POST | `/api/v1/auth/login` | Login |
+| POST | `/api/v1/auth/logout` | Logout |
 
-## Auteur
+## Author
 
 **Saadaoui Mahmoud**
 
-## Licence
+## License
 
 ISC

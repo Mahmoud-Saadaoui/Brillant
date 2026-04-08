@@ -20,7 +20,6 @@ const App = () => {
         theme="colored"
         toastClassName="custom-toast"
         progressClassName="custom-toast-progress"
-        bodyClassName="custom-toast-body"
       />
     </>
   );
